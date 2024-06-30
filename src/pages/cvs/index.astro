@@ -1,6 +1,6 @@
 ---
 import HeaderCV from '@components/HeaderCV.astro'
-import CVLayout from 'src/layouts/CVLayout.astro'
+import CVLayout from '@layouts/CVLayout.astro'
 import Profile from '@components/Profile.astro'
 import CVLink from '@components/CVLink.astro'
 ---
@@ -8,7 +8,15 @@ import CVLink from '@components/CVLink.astro'
 <CVLayout>
   <HeaderCV />
   <main class="flex flex-col gap-9 lg:flex-row">
-    <Profile fullName={'Nombre Persona'} />
+    <Profile
+      fullName={'Alvaro Escalona'}
+      workPosition={'Software Developer'}
+      email={'escalona.alvaro.13@gmail.com'}
+      birthDate={'19 de Enero, 1999'}
+      githubLink="https://github.com/AlvaroEscalonaB"
+      linkedInLink="https://google.com"
+      cvDownloadLink="https://google.com"
+    />
     <section class="flex-1 flex flex-col">
       <article class="flex justify-end" data-testid="buttons">
         <nav class="flex gap-3 px-7 py-6 bg-white/50 rounded-xl">
