@@ -1,7 +1,113 @@
 ---
-const { fullName } = Astro.props
+import { Image } from 'astro:assets'
+import ContactInfo from './ContactInfo.astro'
+import Separator from './Separator.astro'
+import Phone from './icons/Phone.astro'
+import LinkedInIcon from './icons/LinkedInIcon.astro'
+import GithubIcon from './icons/GithubIcon.astro'
+import QR from './icons/QR.astro'
+import Download from './icons/Download.astro'
+
+interface Props {
+  profileImage?: string
+  fullName: string
+  workPosition: string
+  githubLink?: string
+  linkedInLink?: string
+  cvDownloadLink?: string
+  cellPhone?: string
+  email: string
+  address?: string
+  birthDate: string
+}
+
+const { profileImage, fullName, workPosition, githubLink, linkedInLink, cvDownloadLink } =
+  Astro.props
+const defaultProfileImage = profileImage ? profileImage : '/CVExampleNoBg.png'
 ---
 
-<sidebar class="sticky flex flex-col min-w-[360px] min-h-96 mt-6 rounded-xl bg-white/50 px-5">
-  <div>{fullName}</div>
+<sidebar class="sticky flex flex-col min-w-[360px] min-h-96 mt-6">
+  <div class="relative w-full mt-28 bg-white/40 px-5 pt-28 pb-10 rounded-xl">
+    <section
+      class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2"
+      data-testid="profile-container-image"
+    >
+      <div
+        class="flex flex-col justify-end items-center bg-gradient-to-b from-white to-purple-200 overflow-hidden rounded-2xl shadow-md"
+      >
+        <Image
+          src={defaultProfileImage}
+          alt={`${fullName} profile image`}
+          width={300}
+          height={300}
+          class="aspect-square min-w-[200px]"
+        />
+      </div>
+    </section>
+    <section class="flex flex-col items-center justify-center gap-1.5">
+      <div>
+        <h1 class="text-gradient text-center text-3xl font-semibold">{fullName}</h1>
+      </div>
+      <div class="my-auto">
+        <h3 class="text-center text-xl font-semibold text-stone-500">{workPosition}</h3>
+      </div>
+    </section>
+    <section class="mt-2" data-testid="link-redirect-section">
+      <div
+        class="bg-[#F4F6F6] flex flex-row flex-wrap justify-center items-center gap-1.5 px-2.5 py-3 rounded-lg"
+      >
+        {
+          linkedInLink ? (
+            <a
+              href={linkedInLink}
+              class="grid place-content-center h-10 w-10 shadow-sm bg-white rounded-lg cursor-pointer"
+              data-testid="icon"
+            >
+              <LinkedInIcon className="text-stone-700" />
+            </a>
+          ) : null
+        }
+        {
+          githubLink ? (
+            <a
+              href={githubLink}
+              class="grid place-content-center h-10 w-10 shadow-sm bg-white rounded-lg cursor-pointer"
+              data-testid="icon"
+            >
+              <GithubIcon className="text-stone-700" />
+            </a>
+          ) : null
+        }
+        <div
+          class="btn-bg-gradient grid place-content-center h-10 w-10 shadow-sm bg-white rounded-lg"
+          data-testid="icon"
+        >
+          <QR className="text-stone-700" />
+        </div>
+        {
+          cvDownloadLink ? (
+            <a
+              href={cvDownloadLink}
+              class="btn-bg-gradient flex flex-row gap-1.5 justify-center items-center font-semibold text-stone-700 bg-white h-10 shadow-sm rounded-lg px-3"
+              data-testid="icon"
+            >
+              <div>Descargar CV</div>
+              <div>
+                <Download className="text-stone-700" />
+              </div>
+            </a>
+          ) : null
+        }
+      </div>
+    </section>
+    <section class="mt-4 flex flex-col gap-2 px-4 py-4 bg-[#F4F6F6] rounded-lg">
+      <ContactInfo information="+569 4580 7701" kind="phone" />
+      <Separator />
+      <ContactInfo information="escalona.alvaro.13@gmail.com" kind="email" />
+      <Separator />
+      <ContactInfo information="Isabel de Castilla, Maipú" kind="address" />
+      <Separator />
+      <ContactInfo information="19 de Enero, 1999" kind="birthDate" />
+    </section>
+  </div>
 </sidebar>
