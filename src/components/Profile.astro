@@ -2,11 +2,10 @@
 import { Image } from 'astro:assets'
 import ContactInfo from './ContactInfo.astro'
 import Separator from './Separator.astro'
-import Phone from './icons/Phone.astro'
 import LinkedInIcon from './icons/LinkedInIcon.astro'
 import GithubIcon from './icons/GithubIcon.astro'
-import QR from './icons/QR.astro'
 import Download from './icons/Download.astro'
+import QRGenerator from './QRGenerator.astro'
 
 interface Props {
   profileImage?: string
@@ -60,6 +59,7 @@ const defaultProfileImage = profileImage ? profileImage : '/CVExampleNoBg.png'
           linkedInLink ? (
             <a
               href={linkedInLink}
+              target="_blank"
               class="grid place-content-center h-10 w-10 shadow-sm bg-white rounded-lg cursor-pointer"
               data-testid="icon"
             >
@@ -71,6 +71,7 @@ const defaultProfileImage = profileImage ? profileImage : '/CVExampleNoBg.png'
           githubLink ? (
             <a
               href={githubLink}
+              target="_blank"
               class="grid place-content-center h-10 w-10 shadow-sm bg-white rounded-lg cursor-pointer"
               data-testid="icon"
             >
@@ -78,17 +79,12 @@ const defaultProfileImage = profileImage ? profileImage : '/CVExampleNoBg.png'
             </a>
           ) : null
         }
-        <div
-          class="btn-bg-gradient grid place-content-center h-10 w-10 shadow-sm bg-white rounded-lg"
-          data-testid="icon"
-        >
-          <QR className="text-stone-700" />
-        </div>
+        <QRGenerator />
         {
           cvDownloadLink ? (
             <a
               href={cvDownloadLink}
-              class="btn-bg-gradient flex flex-row gap-1.5 justify-center items-center font-semibold text-stone-700 bg-white h-10 shadow-sm rounded-lg px-3"
+              class="btn-bg-gradient flex flex-row gap-1.5 justify-center items-center font-semibold text-stone-700 bg-white h-10 shadow-sm rounded-lg px-3 cursor-pointer"
               data-testid="icon"
             >
               <div>Descargar CV</div>
@@ -101,9 +97,13 @@ const defaultProfileImage = profileImage ? profileImage : '/CVExampleNoBg.png'
       </div>
     </section>
     <section class="mt-4 flex flex-col gap-2 px-4 py-4 bg-[#F4F6F6] rounded-lg">
-      <ContactInfo information="+569 4580 7701" kind="phone" />
+      <copyable-button>
+        <ContactInfo isCopyable information="+569 4580 7701" kind="phone" />
+      </copyable-button>
       <Separator />
-      <ContactInfo information="escalona.alvaro.13@gmail.com" kind="email" />
+      <copyable-button>
+        <ContactInfo isCopyable information="escalona.alvaro.13@gmail.com" kind="email" />
+      </copyable-button>
       <Separator />
       <ContactInfo information="Isabel de Castilla, Maipú" kind="address" />
       <Separator />
@@ -111,3 +111,40 @@ const defaultProfileImage = profileImage ? profileImage : '/CVExampleNoBg.png'
     </section>
   </div>
 </sidebar>
+
+<script>
+  class CopyableButton extends HTMLElement {
+    copyableFeedbackElement: HTMLElement
+
+    constructor() {
+      super()
+
+      // Read the message from the data attribute.
+      const copyableHook = this.querySelector('[data-id="copyable"]') as HTMLElement
+      this.copyableFeedbackElement = this.querySelector(
+        '[data-id="copyable-feedback"]'
+      ) as HTMLElement
+
+      copyableHook?.addEventListener('click', async () => {
+        const data = copyableHook?.dataset.content
+        if (data) {
+          await this.copyToClipboard(data)
+        }
+      })
+    }
+
+    async copyToClipboard(data: string) {
+      try {
+        await navigator.clipboard.writeText(data.replaceAll(' ', ''))
+        this.copyableFeedbackElement.classList.remove('opacity-0')
+        setTimeout(() => {
+          this.copyableFeedbackElement.classList.add('opacity-0')
+        }, 2000)
+      } catch {
+        console.log('Cannot write to clipboard')
+      }
+    }
+  }
+
+  customElements.define('copyable-button', CopyableButton)
+</script>
