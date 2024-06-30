@@ -1,4 +1,5 @@
 ---
+import AtSign from './icons/AtSign.astro'
 import Calendar from './icons/Calendar.astro'
 import Phone from './icons/Phone.astro'
 import Pin from './icons/Pin.astro'
@@ -8,6 +9,7 @@ type ContactType = 'phone' | 'email' | 'address' | 'birthDate'
 interface Props {
   information: string
   kind: ContactType
+  isCopyable?: boolean
 }
 
 const informationDict = {
@@ -25,24 +27,41 @@ const informationDict = {
   },
 }
 
-const { information, kind } = Astro.props
+const { information, kind, isCopyable = false } = Astro.props
 const concreteInformation = informationDict[kind]
 ---
 
-<div class="flex flex-row justify-center items-center gap-2.5">
-  <div class="grid place-content-center h-10 w-10 shadow-sm bg-white rounded-lg" data-testid="icon">
+<div class={`flex flex-row justify-center items-center gap-2.5`}>
+  <div
+    class={`grid place-content-center h-10 w-10 shadow-sm bg-white rounded-lg ${isCopyable ? 'cursor-pointer' : ''}`}
+    data-id="copyable"
+    data-content={information}
+    data-testid="icon"
+  >
     {
       {
         address: <Phone className="text-[#047857]" />,
         phone: <Pin className="text-[#92400E]" />,
-        email: <Phone className="text-[#A21CAF]" />,
+        email: <AtSign className="text-[#A21CAF]" />,
         birthDate: <Calendar className="text-[#075985]" />,
       }[kind]
     }
   </div>
   <div class="flex-1 flex flex-col text-stone-700">
-    <div class="text-sm font-medium">
-      {concreteInformation.label}
+    <div class="text-sm font-medium flex flex-row justify-between min-h-[22px]">
+      <span>{concreteInformation.label}</span>
+      {
+        isCopyable ? (
+          <span
+            data-id="copyable-feedback"
+            class="opacity-0 border border-emerald-700 px-3 text-emerald-700 rounded-full transition-opacity duration-200"
+          >
+            Copiado!
+          </span>
+        ) : (
+          <span />
+        )
+      }
     </div>
     <div class="font-semibold text-base">
       {information}
