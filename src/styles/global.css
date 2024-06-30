@@ -19,6 +19,7 @@
 	--box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
 		0 16px 32px rgba(var(--gray), 33%);
 }
+
 @font-face {
 	font-family: 'Atkinson';
 	src: url('/fonts/atkinson-regular.woff') format('woff');
@@ -26,10 +27,43 @@
 	font-style: normal;
 	font-display: swap;
 }
+
 @font-face {
 	font-family: 'Atkinson';
 	src: url('/fonts/atkinson-bold.woff') format('woff');
 	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Poppins';
+	src: url('/fonts/Poppins-Medium.ttf') format('ttf');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Poppins';
+	src: url('/fonts/Poppins-SemiBold.ttf') format('ttf');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Poppins';
+	src: url('/fonts/Poppins-Bold.ttf') format('ttf');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Poppins';
+	src: url('/fonts/Poppins-Black.ttf') format('ttf');
+	font-weight: 800;
 	font-style: normal;
 	font-display: swap;
 }
@@ -46,9 +80,19 @@ body {
 }
 
 body {
-	font-family: 'Atkinson', sans-serif;
+	font-family: 'Poppins', sans-serif;
 	text-align: left;
 	font-size: 16px;
+}
+
+@layer base {
+	.text-gradient {
+		@apply bg-gradient-to-r from-[#082F49] to-[#1E3A8A] bg-clip-text text-transparent;
+	}
+
+	.btn-bg-gradient {
+		@apply bg-gradient-to-r from-[#F4F4B2] to-[#EEC8FA];
+	}
 }
 
 h1,
@@ -57,9 +101,8 @@ h3,
 h4,
 h5,
 h6 {
-	margin: 0 0 0.5rem 0;
+	margin: 0 0 0 0;
 	color: rgb(var(--black));
-	line-height: 1.2;
 }
 
 h1 {
@@ -80,19 +123,6 @@ h4 {
 
 h5 {
 	font-size: 1.25em;
-}
-
-strong,
-b {
-	font-weight: 700;
-}
-
-a {
-	color: var(--accent);
-}
-
-a:hover {
-	color: var(--accent);
 }
 
 p {
