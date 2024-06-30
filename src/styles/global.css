@@ -38,7 +38,15 @@
 
 @font-face {
 	font-family: 'Poppins';
-	src: url('/fonts/Poppins-Medium.ttf') format('ttf');
+	src: url('/fonts/Poppins-Regular.ttf') format('opentype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Poppins';
+	src: url('/fonts/Poppins-Medium.ttf') format('opentype');
 	font-weight: 500;
 	font-style: normal;
 	font-display: swap;
@@ -46,7 +54,7 @@
 
 @font-face {
 	font-family: 'Poppins';
-	src: url('/fonts/Poppins-SemiBold.ttf') format('ttf');
+	src: url('/fonts/Poppins-SemiBold.ttf') format('opentype');
 	font-weight: 600;
 	font-style: normal;
 	font-display: swap;
@@ -54,7 +62,7 @@
 
 @font-face {
 	font-family: 'Poppins';
-	src: url('/fonts/Poppins-Bold.ttf') format('ttf');
+	src: url('/fonts/Poppins-Bold.ttf') format('opentype');
 	font-weight: 700;
 	font-style: normal;
 	font-display: swap;
@@ -62,10 +70,17 @@
 
 @font-face {
 	font-family: 'Poppins';
-	src: url('/fonts/Poppins-Black.ttf') format('ttf');
+	src: url('/fonts/Poppins-Black.ttf') format('opentype');
 	font-weight: 800;
 	font-style: normal;
 	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Pacifico';
+	src: url('/fonts/Pacifico-Regular.ttf') format('opentype');
+	font-weight: 400;
+	font-style: normal;
 }
 
 * {
@@ -83,6 +98,10 @@ body {
 	font-family: 'Poppins', sans-serif;
 	text-align: left;
 	font-size: 16px;
+}
+
+.font-pacifico {
+	font-family: 'Pacifico'
 }
 
 @layer base {
