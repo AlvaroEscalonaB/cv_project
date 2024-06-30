@@ -1,21 +1,26 @@
 ---
-type LinkName = 'info' | 'cv' | 'blogs' | 'contact' | 'faq'
+import Contact from './icons/Contact.astro'
+import FileQuestion from './icons/FileQuestion.astro'
+import NewsPaper from './icons/NewsPaper.astro'
+import UserRound from './icons/UserRound.astro'
+
+type LinkName = 'info' | 'experience' | 'contact' | 'faq'
 interface Props {
   name: LinkName
 }
+const availablePath = ['info', 'experience', 'contact', 'faq'] as const
 
 const { name } = Astro.props
-const currentPath = Astro.url.pathname
-const isCurrentPathActive = currentPath.split('/').at(-1) === currentPath
+const currentPath = Astro.url.pathname.split('/').at(-1)
+const path = availablePath.includes(name) ? 'info' : currentPath
+const isCurrentPathActive = path === name
+const slug = Astro.params.slug
 const nameDict = {
   info: {
     name: 'Info',
   },
-  cv: {
+  experience: {
     name: 'CV',
-  },
-  blogs: {
-    name: 'Blogs',
   },
   contact: {
     name: 'Contacto',
@@ -24,14 +29,25 @@ const nameDict = {
     name: 'FAQ',
   },
 }
+
+const textColor = isCurrentPathActive ? 'text-white' : 'text-stone-700'
 ---
 
 <a
-  href={`${Astro.site}/${name}`}
-  class={`${isCurrentPathActive ? 'bg-purple-200' : 'bg-white/50'} rounded-lg shadow-sm`}
+  href={`${Astro.url.origin}/cv/${slug}/${name}`}
+  class={`${isCurrentPathActive ? 'bg-orange-400' : 'bg-white/50'} ${textColor} rounded-lg shadow-sm`}
 >
-  <div class="flex flex-col justify-center items-center gap-2 w-20 h-20 text-stone-700 text-xs">
-    <span>Icon</span>
+  <div class="flex flex-col justify-center items-center gap-2 w-20 h-20 text-xs">
+    <span>
+      {
+        {
+          info: <UserRound className={textColor} />,
+          experience: <NewsPaper className={textColor} />,
+          contact: <Contact className={textColor} />,
+          faq: <FileQuestion className={textColor} />,
+        }[name]
+      }
+    </span>
     <span>{nameDict[name].name}</span>
   </div>
 </a>
