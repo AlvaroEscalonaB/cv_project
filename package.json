@@ -17,6 +17,7 @@
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/ts-plugin": "^1.8.0",
     "astro": "^4.11.0",
+    "qr-code-styling": "1.6.0-rc.1",
     "typescript": "^5.5.2"
   },
   "devDependencies": {
