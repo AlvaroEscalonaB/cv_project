@@ -13,4 +13,20 @@ const blog = defineCollection({
 	}),
 });
 
-export const collections = { blog };
+const cv = defineCollection({
+	type: 'data',
+	schema: z.object({
+		profileImage: z.string().optional().nullable(),
+		fullName: z.string(),
+		workPosition: z.string(),
+		githubLink: z.string().optional(),
+		linkedInLink: z.string().optional(),
+		cvDownloadLink: z.string().optional(),
+		cellPhone: z.string().optional(),
+		email: z.string().email(),
+		address: z.string().optional(),
+		birthDate: z.string(),
+	})
+})
+
+export const collections = { blog, cv };
