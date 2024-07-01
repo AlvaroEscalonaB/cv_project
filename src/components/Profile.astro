@@ -145,7 +145,7 @@ const cellPhoneFormatted = cellPhone && formatPhone(cellPhone)
           this.copyableFeedbackElement.classList.add('opacity-0')
         }, 2000)
       } catch {
-        console.log('Cannot write to clipboard')
+        console.error('Cannot write to clipboard')
       }
     }
   }
