@@ -15,20 +15,21 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'cv'>
 
 const cv = Astro.props
-const data = cv.data
+const profileData = cv.data.profileData
 ---
 
 <CVLayout>
   <HeaderCV />
   <main class="flex flex-col gap-9 lg:flex-row">
     <Profile
-      fullName={data.fullName}
-      workPosition={data.workPosition}
-      email={data.email}
-      birthDate={data.birthDate}
-      githubLink={data.githubLink}
-      linkedInLink={data.linkedInLink}
-      cvDownloadLink={data.cvDownloadLink}
+      fullName={profileData.fullName}
+      workPosition={profileData.workPosition}
+      email={profileData.email}
+      birthDate={profileData.birthDate}
+      githubLink={profileData.githubLink}
+      linkedInLink={profileData.linkedInLink}
+      cvDownloadLink={profileData.cvDownloadLink}
+      cellPhone={profileData.cellPhone}
     />
     <section class="flex-1 flex flex-col">
       <article class="flex justify-end" data-testid="buttons">
