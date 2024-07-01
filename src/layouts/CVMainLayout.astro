@@ -1,0 +1,53 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content'
+import HeaderCV from '@components/HeaderCV.astro'
+import CVLayout from '@layouts/CVLayout.astro'
+import Profile from '@components/Profile.astro'
+import CVLink from '@components/CVLink.astro'
+import type { Profile as ProfileProps } from 'src/schemas'
+
+type Props = ProfileProps
+
+const {
+  fullName,
+  workPosition,
+  email,
+  birthDate,
+  githubLink,
+  linkedInLink,
+  cvDownloadLink,
+  cellPhone,
+} = Astro.props
+---
+
+<CVLayout>
+  <HeaderCV />
+  <main class="flex flex-col gap-9 lg:flex-row">
+    <Profile
+      fullName={fullName}
+      workPosition={workPosition}
+      email={email}
+      birthDate={birthDate}
+      githubLink={githubLink}
+      linkedInLink={linkedInLink}
+      cvDownloadLink={cvDownloadLink}
+      cellPhone={cellPhone}
+    />
+    <section class="flex-1 flex flex-col">
+      <article class="flex justify-end" data-testid="buttons">
+        <nav class="flex gap-3 px-7 py-6 bg-white/50 rounded-xl">
+          <CVLink name="info" />
+          <CVLink name="experience" />
+          <CVLink name="contact" />
+          <CVLink name="faq" />
+        </nav>
+      </article>
+      <article
+        data-testid="info-section"
+        class="font-pacifico bg-white bg-opacity-50 rounded-2xl mt-6 min-h-32 p-10"
+      >
+        <slot />
+      </article>
+    </section>
+  </main>
+</CVLayout>
