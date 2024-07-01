@@ -6,23 +6,23 @@ import LinkedInIcon from './icons/LinkedInIcon.astro'
 import GithubIcon from './icons/GithubIcon.astro'
 import Download from './icons/Download.astro'
 import QRGenerator from './QRGenerator.astro'
+import { formatPhone } from 'src/utils/phone'
+import type { Profile } from 'src/schemas'
 
-interface Props {
-  profileImage?: string
-  fullName: string
-  workPosition: string
-  githubLink?: string
-  linkedInLink?: string
-  cvDownloadLink?: string
-  cellPhone?: string
-  email: string
-  address?: string
-  birthDate: string
-}
+type Props = Profile
 
-const { profileImage, fullName, workPosition, githubLink, linkedInLink, cvDownloadLink } =
-  Astro.props
+const {
+  profileImage,
+  fullName,
+  workPosition,
+  githubLink,
+  linkedInLink,
+  cvDownloadLink,
+  cellPhone,
+} = Astro.props
+
 const defaultProfileImage = profileImage ? profileImage : '/CVExampleNoBg.png'
+const cellPhoneFormatted = cellPhone && formatPhone(cellPhone)
 ---
 
 <sidebar class="sticky flex flex-col min-w-[360px] min-h-96 mt-6">
@@ -97,9 +97,13 @@ const defaultProfileImage = profileImage ? profileImage : '/CVExampleNoBg.png'
       </div>
     </section>
     <section class="mt-4 flex flex-col gap-2 px-4 py-4 bg-[#F4F6F6] rounded-lg">
-      <copyable-button>
-        <ContactInfo isCopyable information="+569 4580 7701" kind="phone" />
-      </copyable-button>
+      {
+        cellPhoneFormatted ? (
+          <copyable-button>
+            <ContactInfo isCopyable information={cellPhoneFormatted} kind="phone" />
+          </copyable-button>
+        ) : null
+      }
       <Separator />
       <copyable-button>
         <ContactInfo isCopyable information="escalona.alvaro.13@gmail.com" kind="email" />
