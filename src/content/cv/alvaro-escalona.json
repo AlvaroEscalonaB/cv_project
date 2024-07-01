@@ -1,12 +1,14 @@
 {
-  "profileImage": null,
-  "fullName": "Alvaro Escalona",
-  "workPosition": "Software Developer",
-  "githubLink": "https://github.com/AlvaroEscalonaB",
-  "linkedInLink": "https://www.linkedin.com/in/alvaroescalona/",
-  "cvDownloadLink": "https://google.com",
-  "cellPhone": "+56945807701",
-  "email": "escalona.alvaro.13@gmail.com",
-  "address": "Isabel de Castilla",
-  "birthDate": "19 de Enero, 1999"
+  "profileData": {
+    "profileImage": null,
+    "fullName": "Alvaro Escalona",
+    "workPosition": "Software Developer",
+    "githubLink": "https://github.com/AlvaroEscalonaB",
+    "linkedInLink": "https://www.linkedin.com/in/alvaroescalona/",
+    "cvDownloadLink": "https://google.com",
+    "cellPhone": "+56945807701",
+    "email": "escalona.alvaro.13@gmail.com",
+    "address": "Isabel de Castilla",
+    "birthDate": "19 de Enero, 1999"
+  }
 }
