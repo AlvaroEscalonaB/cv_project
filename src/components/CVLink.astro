@@ -8,11 +8,11 @@ type LinkName = 'info' | 'experience' | 'contact' | 'faq'
 interface Props {
   name: LinkName
 }
-const availablePath = ['info', 'experience', 'contact', 'faq'] as const
+const availablePath = ['info', 'experience', 'contact', 'faq']
 
 const { name } = Astro.props
-const currentPath = Astro.url.pathname.split('/').at(-1)
-const path = availablePath.includes(name) ? currentPath : 'info'
+const currentPath = Astro.url.pathname.split('/').at(-1) ?? ''
+const path = availablePath.includes(currentPath) ? currentPath : 'info'
 const isCurrentPathActive = path === name
 const slug = Astro.params.slug
 const nameDict = {
