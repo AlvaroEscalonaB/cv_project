@@ -1,0 +1,18 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content'
+import CVMainLayout from '@layouts/CVMainLayout.astro'
+
+export async function getStaticPaths() {
+  const cvs = await getCollection('cv')
+  return cvs.map((cv) => ({
+    params: { slug: cv.id },
+    props: cv,
+  }))
+}
+type Props = CollectionEntry<'cv'>
+
+const cv = Astro.props
+const profileData = cv.data.profileData
+---
+
+<CVMainLayout {...profileData}>FAQ</CVMainLayout>
