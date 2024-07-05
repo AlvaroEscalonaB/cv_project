@@ -1,0 +1,40 @@
+---
+interface Props {
+  className: string
+}
+const { className } = Astro.props
+---
+
+<svg
+  width="24"
+  height="25"
+  viewBox="0 0 24 25"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  class={className}
+>
+  <path
+    d="M4 22.2872H20C20.5304 22.2872 21.0391 22.0765 21.4142 21.7014C21.7893 21.3264 22 20.8177 22 20.2872V4.28723C22 3.7568 21.7893 3.24809 21.4142 2.87302C21.0391 2.49795 20.5304 2.28723 20 2.28723H8C7.46957 2.28723 6.96086 2.49795 6.58579 2.87302C6.21071 3.24809 6 3.7568 6 4.28723V20.2872C6 20.8177 5.78929 21.3264 5.41421 21.7014C5.03914 22.0765 4.53043 22.2872 4 22.2872ZM4 22.2872C3.46957 22.2872 2.96086 22.0765 2.58579 21.7014C2.21071 21.3264 2 20.8177 2 20.2872V11.2872C2 10.1872 2.9 9.28723 4 9.28723H6"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"></path>
+  <path
+    d="M18 14.2872H10"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"></path>
+  <path
+    d="M15 18.2872H10"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"></path>
+  <path
+    d="M10 6.28723H18V10.2872H10V6.28723Z"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"></path>
+</svg>

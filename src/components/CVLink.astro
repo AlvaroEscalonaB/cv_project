@@ -1,0 +1,55 @@
+---
+import Contact from './icons/Contact.astro'
+import FileQuestion from './icons/FileQuestion.astro'
+import NewsPaper from './icons/NewsPaper.astro'
+import UserRound from './icons/UserRound.astro'
+
+type LinkName = 'info' | 'experience' | 'contact' | 'faq'
+interface Props {
+  name: LinkName
+}
+const availablePath = ['info', 'experience', 'contact', 'faq']
+
+const { name } = Astro.props
+const currentPath = Astro.url.pathname.split('/').at(-1) ?? ''
+const path = availablePath.includes(currentPath) ? currentPath : 'info'
+const isCurrentPathActive = path === name
+const slug = Astro.params.slug
+const nameDict = {
+  info: {
+    name: 'Info',
+  },
+  experience: {
+    name: 'CV',
+  },
+  contact: {
+    name: 'Contacto',
+  },
+  faq: {
+    name: 'FAQ',
+  },
+}
+
+const textColor = isCurrentPathActive ? 'text-white' : 'text-stone-700'
+---
+
+<a
+  href={name === 'info'
+    ? `${Astro.url.origin}/cv/${slug}`
+    : `${Astro.url.origin}/cv/${slug}/${name}`}
+  class={`${isCurrentPathActive ? 'bg-orange-400' : 'bg-white/50'} ${textColor} rounded-lg shadow-sm`}
+>
+  <div class="flex flex-col justify-center items-center gap-2 w-20 h-20 text-xs">
+    <span>
+      {
+        {
+          info: <UserRound className={textColor} />,
+          experience: <NewsPaper className={textColor} />,
+          contact: <Contact className={textColor} />,
+          faq: <FileQuestion className={textColor} />,
+        }[name]
+      }
+    </span>
+    <span>{nameDict[name].name}</span>
+  </div>
+</a>

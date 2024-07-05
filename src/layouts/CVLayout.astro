@@ -1,0 +1,17 @@
+---
+import BaseHead from '@components/BaseHead.astro'
+import { SITE_TITLE, SITE_DESCRIPTION } from './../consts'
+// import { getCollection } from 'astro:content'
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body class="h-full bg-gradient-to-br from-[#F5F5DC] to-[#F0DEF6]">
+    <div class="px-40 py-4">
+      <slot />
+    </div>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+---
+import CVQRIcon from './icons/CVQRIcon.astro'
+import QRIcon from './icons/QRIcon.astro'
+const currentLink = `${Astro.url.origin}/cv/${Astro.params.slug}`
+---
+
+<div
+  class="btn-bg-gradient grid place-content-center h-10 w-10 shadow-sm bg-white rounded-lg cursor-pointer"
+  data-testid="icon"
+  data-content={currentLink}
+  id="downloadable-qr"
+>
+  <QRIcon className="text-stone-700" />
+  <div class="hidden" id="svg-fill-content">
+    <CVQRIcon fullName={Astro.params.slug || 'nombre-completo'} />
+  </div>
+  <div class="hidden" id="qr-content"></div>
+</div>
+
+<script>
+  import QRCodeStyling from 'qr-code-styling'
+
+  const contentElement = document.querySelector('#downloadable-qr') as HTMLElement
+  const link = contentElement.dataset.content
+  const centerContent = document.querySelector('#svg-fill-content svg') as HTMLElement
+  const serializer = new XMLSerializer()
+  const bytes = serializer.serializeToString(centerContent)
+  const bytesTrasformed = btoa(
+    encodeURIComponent(bytes).replace(/%([0-9A-F]{2})/g, function (_, p1) {
+      return String.fromCharCode(parseInt(p1, 16))
+    })
+  )
+
+  const qrCode = new QRCodeStyling({
+    width: 300,
+    height: 300,
+    type: 'svg',
+    data: link,
+    image: `data:image/svg+xml;base64,${bytesTrasformed}`,
+    dotsOptions: {
+      color: '#4267b2',
+      type: 'rounded',
+    },
+    backgroundOptions: {
+      color: '#e9ebee',
+    },
+    imageOptions: {
+      crossOrigin: 'anonymous',
+      margin: 4,
+    },
+  })
+
+  qrCode.append(document.querySelector('#qr-content') as HTMLElement)
+
+  document.querySelector('#downloadable-qr')?.addEventListener('click', async () => {
+    try {
+      await qrCode.download({ name: 'qrcode', extension: 'png' })
+    } catch (e) {
+      console.error(e)
+    }
+  })
+</script>

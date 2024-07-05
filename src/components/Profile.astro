@@ -1,0 +1,154 @@
+---
+import { Image } from 'astro:assets'
+import ContactInfo from './ContactInfo.astro'
+import Separator from './Separator.astro'
+import LinkedInIcon from './icons/LinkedInIcon.astro'
+import GithubIcon from './icons/GithubIcon.astro'
+import Download from './icons/Download.astro'
+import QRGenerator from './QRGenerator.astro'
+import { formatPhone } from 'src/utils/phone'
+import type { Profile } from 'src/schemas'
+
+type Props = Profile
+
+const {
+  profileImage,
+  fullName,
+  workPosition,
+  githubLink,
+  linkedInLink,
+  cvDownloadLink,
+  cellPhone,
+} = Astro.props
+
+const defaultProfileImage = profileImage ? profileImage : '/CVExampleNoBg.png'
+const cellPhoneFormatted = cellPhone && formatPhone(cellPhone)
+---
+
+<sidebar class="sticky flex flex-col min-w-[360px] min-h-96 mt-6">
+  <div class="relative w-full mt-28 bg-white/40 px-5 pt-28 pb-10 rounded-xl">
+    <section
+      class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2"
+      data-testid="profile-container-image"
+    >
+      <div
+        class="flex flex-col justify-end items-center bg-gradient-to-b from-white to-purple-200 overflow-hidden rounded-2xl shadow-md"
+      >
+        <Image
+          src={defaultProfileImage}
+          alt={`${fullName} profile image`}
+          width={300}
+          height={300}
+          class="aspect-square min-w-[200px]"
+        />
+      </div>
+    </section>
+    <section class="flex flex-col items-center justify-center gap-1.5">
+      <div>
+        <h1 class="text-gradient text-center text-3xl font-semibold">{fullName}</h1>
+      </div>
+      <div class="my-auto">
+        <h3 class="text-center text-xl font-semibold text-stone-500">{workPosition}</h3>
+      </div>
+    </section>
+    <section class="mt-2" data-testid="link-redirect-section">
+      <div
+        class="bg-[#F4F6F6] flex flex-row flex-wrap justify-center items-center gap-1.5 px-2.5 py-3 rounded-lg"
+      >
+        {
+          linkedInLink ? (
+            <a
+              href={linkedInLink}
+              target="_blank"
+              class="grid place-content-center h-10 w-10 shadow-sm bg-white rounded-lg cursor-pointer"
+              data-testid="icon"
+            >
+              <LinkedInIcon className="text-stone-700" />
+            </a>
+          ) : null
+        }
+        {
+          githubLink ? (
+            <a
+              href={githubLink}
+              target="_blank"
+              class="grid place-content-center h-10 w-10 shadow-sm bg-white rounded-lg cursor-pointer"
+              data-testid="icon"
+            >
+              <GithubIcon className="text-stone-700" />
+            </a>
+          ) : null
+        }
+        <QRGenerator />
+        {
+          cvDownloadLink ? (
+            <a
+              href={cvDownloadLink}
+              class="btn-bg-gradient flex flex-row gap-1.5 justify-center items-center font-semibold text-stone-700 bg-white h-10 shadow-sm rounded-lg px-3 cursor-pointer"
+              data-testid="icon"
+            >
+              <div>Descargar CV</div>
+              <div>
+                <Download className="text-stone-700" />
+              </div>
+            </a>
+          ) : null
+        }
+      </div>
+    </section>
+    <section class="mt-4 flex flex-col gap-2 px-4 py-4 bg-[#F4F6F6] rounded-lg">
+      {
+        cellPhoneFormatted ? (
+          <copyable-button>
+            <ContactInfo isCopyable information={cellPhoneFormatted} kind="phone" />
+          </copyable-button>
+        ) : null
+      }
+      <Separator />
+      <copyable-button>
+        <ContactInfo isCopyable information="escalona.alvaro.13@gmail.com" kind="email" />
+      </copyable-button>
+      <Separator />
+      <ContactInfo information="Isabel de Castilla, Maipú" kind="address" />
+      <Separator />
+      <ContactInfo information="19 de Enero, 1999" kind="birthDate" />
+    </section>
+  </div>
+</sidebar>
+
+<script>
+  class CopyableButton extends HTMLElement {
+    copyableFeedbackElement: HTMLElement
+
+    constructor() {
+      super()
+
+      // Read the message from the data attribute.
+      const copyableHook = this.querySelector('[data-id="copyable"]') as HTMLElement
+      this.copyableFeedbackElement = this.querySelector(
+        '[data-id="copyable-feedback"]'
+      ) as HTMLElement
+
+      copyableHook?.addEventListener('click', async () => {
+        const data = copyableHook?.dataset.content
+        if (data) {
+          await this.copyToClipboard(data)
+        }
+      })
+    }
+
+    async copyToClipboard(data: string) {
+      try {
+        await navigator.clipboard.writeText(data.replaceAll(' ', ''))
+        this.copyableFeedbackElement.classList.remove('opacity-0')
+        setTimeout(() => {
+          this.copyableFeedbackElement.classList.add('opacity-0')
+        }, 2000)
+      } catch {
+        console.error('Cannot write to clipboard')
+      }
+    }
+  }
+
+  customElements.define('copyable-button', CopyableButton)
+</script>
